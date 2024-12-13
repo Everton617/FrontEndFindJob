@@ -1,0 +1,27 @@
+<nav class="navbar">
+  <div class="container">
+    <div><a class="navbar-brand" routerLink="/home">MyApp</a></div>
+    <div class="navigation">
+      <ul class="nav-links">
+        <li><a href="/vagas" routerLink="/vagas" routerLinkActive="active">Vagas</a></li>
+        <li><a href="/form" routerLink="/curriculum" routerLinkActive="active">Currículo</a></li>
+        <li><a href="/historico" routerLink="/contact" routerLinkActive="active">Histórico</a></li>
+      </ul>
+
+
+      <button type="button" class="btn btn-primary" [popover]="userPopover">
+        <i class="icone-user fa-regular fa-user"></i>
+      </button>
+
+      <ng-template #userPopover>
+        <div class="user-popover">
+          <p>Olá, {{ userName }}</p>
+
+          <a href="#" (click)="logout()">Sair</a>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+</nav>

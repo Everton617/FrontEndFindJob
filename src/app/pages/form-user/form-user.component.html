@@ -1,0 +1,166 @@
+<app-navbar></app-navbar>
+<ng-template #formTemplate>
+  <div class="container" #formTemplate>
+    <div>
+      <h1 class="title">Insira os seus dados</h1>
+    </div>
+    <form [formGroup]="candidatoForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="grid-container" >
+        <div class="grid-area">
+          <div class="content-form">
+            <label for="nome">Nome:</label>
+            <input class="input-form" type="text" id="nome" formControlName="nome" required>
+            <div
+              *ngIf="candidatoForm.get('nome')?.invalid && (candidatoForm.get('nome')?.dirty || candidatoForm.get('nome')?.touched)">
+              <div *ngIf="candidatoForm.get('nome')?.errors?.['required']">Nome é obrigatório.</div>
+            </div>
+          </div>
+          <div class="content-form">
+            <label for="telefone">Telefone:</label>
+            <input class="input-form" type="tel" id="telefone" formControlName="telefone" required>
+            <div
+              *ngIf="candidatoForm.get('telefone')?.invalid && (candidatoForm.get('telefone')?.dirty || candidatoForm.get('telefone')?.touched)">
+              <div *ngIf="candidatoForm.get('telefone')?.errors?.['required']"> Telefone é obrigatório</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-area">
+          <div class="content-form">
+            <label for="dt_nascimento">Data de Nascimento:</label>
+            <input class="input-form" type="date" id="dt_nascimento" formControlName="dt_nascimento" required>
+            <div
+              *ngIf="candidatoForm.get('dt_nascimento')?.invalid && (candidatoForm.get('dt_nascimento')?.dirty || candidatoForm.get('dt_nascimento')?.touched)">
+              <div *ngIf="candidatoForm.get('dt_nascimento')?.errors?.['required']"> Data de nascimento é obrigatória
+              </div>
+            </div>
+          </div>
+          <div class="content-form">
+            <label for="endereco">Endereço:</label>
+            <input class="input-form" type="text" id="endereco" formControlName="endereco" required>
+            <div
+              *ngIf="candidatoForm.get('endereco')?.invalid && (candidatoForm.get('endereco')?.dirty || candidatoForm.get('endereco')?.touched)">
+              <div *ngIf="candidatoForm.get('endereco')?.errors?.['required']"> Endereço é obrigatório</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-area2">
+          <div class="content-form">
+            <label for="cidade">Cidade:</label>
+            <input class="input-form" type="text" id="cidade" formControlName="cidade" required>
+            <div
+              *ngIf="candidatoForm.get('cidade')?.invalid && (candidatoForm.get('cidade')?.dirty || candidatoForm.get('cidade')?.touched)">
+              <div *ngIf="candidatoForm.get('cidade')?.errors?.['required']"> Cidade é obrigatória</div>
+            </div>
+          </div>
+          <div class="content-form">
+            <label for="estado">Estado:</label>
+            <input class="input-form" type="text" id="estado" formControlName="estado" required>
+            <div
+              *ngIf="candidatoForm.get('estado')?.invalid && (candidatoForm.get('estado')?.dirty || candidatoForm.get('estado')?.touched)">
+              <div *ngIf="candidatoForm.get('estado')?.errors?.['required']"> Estado é obrigatório</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-area">
+          <div class="content-form">
+            <label for="cep">CEP:</label>
+            <input class="input-form" type="text" id="cep" formControlName="cep" required>
+            <div
+              *ngIf="candidatoForm.get('cep')?.invalid && (candidatoForm.get('cep')?.dirty || candidatoForm.get('cep')?.touched)">
+              <div *ngIf="candidatoForm.get('cep')?.errors?.['required']"> CEP é obrigatório</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-area">
+          <div class="content-form">
+            <label for="area_atuacao">Área de Atuação:</label>
+            <select class="input-form" id="area_atuacao" formControlName="area_atuacao" required>
+              <option value="">Selecione uma área</option>
+              <option value="administracao">Front End</option>
+              <option value="artes">Back End</option>
+              <option value="comercio">Full Stack</option>
+              <option value="comunicacao">Mobile</option>
+              <option value="construcao">DevOps</option>
+              <option value="design">Design</option>
+              <option value="educacao">Analista de Dados</option>
+              <option value="engenharia">Jogos</option>
+            </select>
+            <div
+              *ngIf="candidatoForm.get('area_atuacao')?.invalid && (candidatoForm.get('area_atuacao')?.dirty || candidatoForm.get('area_atuacao')?.touched)">
+              <div *ngIf="candidatoForm.get('area_atuacao')?.errors?.['required']"> Área de atuação é obrigatória</div>
+            </div>
+          </div>
+          <div class="content-form">
+            <label for="nv_experiencia">Nível de Experiência:</label>
+            <select class="input-form" id="nv_experiencia" formControlName="nv_experiencia" required>
+              <option value="">Selecione um nível</option>
+              <option value="junior">Júnior</option>
+              <option value="pleno">Pleno</option>
+              <option value="senior">Sênior</option>
+              <option value="estagiario">Estagiário</option>
+            </select>
+            <div
+              *ngIf="candidatoForm.get('nv_experiencia')?.invalid && (candidatoForm.get('nv_experiencia')?.dirty || candidatoForm.get('nv_experiencia')?.touched)">
+              <div *ngIf="candidatoForm.get('nv_experiencia')?.errors?.['required']"> Nível de experiência é obrigatório
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-textarea">
+        <h3 style="font-size: 25px; padding-top: 20px; padding-bottom: 5px;">Experiências</h3>
+        <div class="box-textarea">
+          <div formGroupName="habilidades">
+            <textarea style="max-height: 250px; max-width: 860px;" class="text-area"
+              placeholder="digite aqui alguma experiência que queira compartilhar" class="form-control"
+              formControlName="descricao" rows="3"></textarea>
+          </div>
+        </div>
+
+
+
+        <div class="container-textarea">
+          <h3 style="font-size: 25px; padding-top: 20px; padding-bottom: 5px;" >Conhecimentos</h3>
+          <div class="box-textarea">
+            <div class="" formGroupName="experiencias">
+              <textarea style="max-height: 250px; max-width: 860px;"
+                placeholder="digite aqui alguma habilidade ou curso que queira compartilhar" class="form-control"
+                formControlName="descricao" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  style="display: flex; justify-content: end; padding: 20px;"><button class="btn-form" style="width: 100px; height: 40px; border-radius: 5px; border: none; background: rgb(145, 243, 145); color: white;" type="submit">Enviar</button></div>
+    </form>
+
+  </div>
+</ng-template>
+
+<div *ngIf="formDataResponse; else formTemplate" class="form-data-container">
+  <!-- Display the filled-in data if formDataResponse exists -->
+  <h1 class="title">Formulário preenchido</h1>
+  <div class="form-data-content">
+    <p><strong>Nome:</strong> {{ formDataResponse.nome }}</p>
+    <p><strong>Telefone:</strong> {{ formDataResponse.telefone }}</p>
+    <p><strong>Data de Nascimento:</strong> {{ formDataResponse.dt_nascimento | date }}</p>
+    <p><strong>Endereço:</strong> {{ formDataResponse.endereco }}</p>
+    <p><strong>Cidade:</strong> {{ formDataResponse.cidade }}</p>
+    <p><strong>Estado:</strong> {{ formDataResponse.estado }}</p>
+    <p><strong>CEP:</strong> {{ formDataResponse.cep }}</p>
+    <p><strong>Área de Atuação:</strong> {{ formDataResponse.area_atuacao }}</p>
+    <p><strong>Nível de Experiência:</strong> {{ formDataResponse.nv_experiencia }}</p>
+    <p><strong>Experiências:</strong> {{ formDataResponse.habilidades.descricao }}</p>
+    <p><strong>Conhecimentos:</strong> {{ formDataResponse.experiencias.descricao }}</p>
+  </div>
+</div>
+
+
