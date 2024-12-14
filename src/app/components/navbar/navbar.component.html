@@ -2,10 +2,13 @@
   <div class="container">
     <div><a class="navbar-brand" routerLink="/home">MyApp</a></div>
     <div class="navigation">
-      <ul class="nav-links">
+      <ul class="nav-links" *ngIf="role !== 'company'">
         <li><a href="/vagas" routerLink="/vagas" routerLinkActive="active">Vagas</a></li>
         <li><a href="/form" routerLink="/curriculum" routerLinkActive="active">Currículo</a></li>
         <li><a href="/historico" routerLink="/contact" routerLinkActive="active">Histórico</a></li>
+      </ul>
+      <ul class="nav-links" *ngIf="role === 'company'">
+        <li><a href="/form-vagas" routerLink="/form-vagas" routerLinkActive="active">Vagas</a></li>
       </ul>
 
 

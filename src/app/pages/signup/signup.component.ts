@@ -29,6 +29,7 @@ interface SignupForm {
 })
 export class SignUpComponent {
   signupForm!: FormGroup<SignupForm>;
+  selectedRole: string = '';
 
   constructor(
     private router: Router,
@@ -43,20 +44,41 @@ export class SignUpComponent {
     });
   }
 
+  selectRole(role: string) {
+    this.selectedRole = role;
+    console.log('Role selecionada:', role);
+  }
+
   submit() {
+    if (this.signupForm.invalid) {
+      this.toastService.error("Por favor, preencha todos os campos corretamente.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.signupForm.value.name || '');
     formData.append('email', this.signupForm.value.email || '');
     formData.append('password', this.signupForm.value.password || '');
     formData.append('passwordConfirm', this.signupForm.value.passwordConfirm || '');
 
-    this.loginService.signupWithFormData(formData).subscribe({
-      next: () => this.toastService.success("Cadastro realizado com sucesso!"),
-      error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-    });
+    if (this.selectedRole === 'user') {
+      this.loginService.signupWithFormData(formData).subscribe({
+        next: () => this.toastService.success("Cadastro realizado com sucesso!"),
+        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
+      });
+    } else if (this.selectedRole === 'company') {
+      this.loginService.signupCompanyWithFormData(formData).subscribe({
+        next: () => this.toastService.success("Cadastro realizado com sucesso!"),
+        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
+      });
+    } else {
+      this.toastService.error("Por favor, selecione um role.");
+    }
   }
 
+
+
   navigate() {
-    this.router.navigate(["login"]);
+    this.router.navigate(["/login"]);
   }
 }

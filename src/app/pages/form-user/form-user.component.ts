@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { HttpClient, HttpClientModule,HttpHeaders  } from '@angular/common/http';

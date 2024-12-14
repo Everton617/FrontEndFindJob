@@ -1,5 +1,13 @@
 <app-default-login-layout title="Login into your account" primaryBtnText="Login Now" secondaryBtnText="Signup Now"
   (submit)="submit()" (navigate)="navigate()" [disablePrimaryBtn]="!loginForm.valid">
+  <div class="button-container">
+    <button class="btn user-btn" [class.selected]="selectedRole === 'user'" (click)="selectRole('user')">
+      <i class="fa-solid fa-user"></i>como usuário
+    </button>
+    <button class="btn company-btn" [class.selected]="selectedRole === 'company'" (click)="selectRole('company')">
+      <i class="fa-solid fa-building"></i> como Empresa
+    </button>
+  </div>
   <form [formGroup]="loginForm">
     <app-primary-input formControlName="email" inputName="email" type="email" label="Email"
       placeholder="johndoe@gmail.com">

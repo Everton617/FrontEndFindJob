@@ -14,3 +14,49 @@ form {
         text-align: end;
     }
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-btn.selected {
+  background-color: #444; /* Cor mais escura quando selecionado */
+  color: #fff; /* Texto branco */
+}
+
+.company-btn.selected {
+  background-color: #444; /* Cor mais escura quando selecionado */
+  color: #fff; /* Texto branco */
+}
+
+.user-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #4CAF50; /* Verde para usuário */
+  color: white;
+}
+
+.company-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2196F3; /* Azul para empresa */
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}

@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<div class="container">
+
+  <div class="header">
+    <div class="area-header">
+      <h1>Bem vindo a area da empresa</h1>
+      <p>Bem-vindo à plataforma da empresa, onde você pode cadastrar novas vagas e gerenciar o seu portfólio.</p>
+    </div>
+  </div>
+
+
+
+  <div class="form-container">
+    <h2>Cadastrar Nova Vaga</h2>
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Título da Vaga</label>
+        <input id="title" formControlName="title" type="text" class="form-control" />
+        <div *ngIf="jobForm.get('title')?.invalid && jobForm.get('title')?.touched" class="error">
+          O título é obrigatório e deve ter pelo menos 3 caracteres.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+        <div *ngIf="jobForm.get('description')?.invalid && jobForm.get('description')?.touched" class="error">
+          A descrição é obrigatória e deve ter pelo menos 10 caracteres.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="requirements">Requisitos</label>
+        <textarea id="requirements" formControlName="requirements" class="form-control"></textarea>
+        <div *ngIf="jobForm.get('requirements')?.invalid && jobForm.get('requirements')?.touched" class="error">
+          Os requisitos são obrigatórios e devem ter pelo menos 5 caracteres.
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="jobForm.invalid" class="btn btn-primary">Criar Vaga</button>
+    </form>
+  </div>
+  <div class="job-container" *ngIf="formDataResponse.length > 0">
+    <h2>Vagas Cadastradas</h2>
+    <div class="job-card" *ngFor="let job of formDataResponse">
+      <h3>{{ job.title }}</h3>
+      <p><strong>Descrição:</strong> {{ job.description }}</p>
+      <p><strong>Requisitos:</strong> {{ job.requirements }}</p>
+      <p><strong>Data de Criação:</strong> {{ job.createdDate }}</p>
+    </div>
+  </div>
+</div>

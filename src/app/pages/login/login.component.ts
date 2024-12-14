@@ -27,6 +27,7 @@ interface LoginForm {
 })
 export class LoginComponent {
   loginForm!: FormGroup<LoginForm>;
+  selectedRole: string = '';
 
   constructor(
     private router: Router,
@@ -39,15 +40,30 @@ export class LoginComponent {
     });
   }
 
+  selectRole(role: string) {
+    this.selectedRole = role;
+    console.log('Role selecionada:', role);
+  }
+
   submit() {
     const formData = new FormData();
     formData.append('email', this.loginForm.value.email || '');
     formData.append('password', this.loginForm.value.password || '');
 
-    this.loginService.loginWithFormData(formData).subscribe({
-      next: () => this.toastService.success("Login feito com sucesso!"),
-      error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-    });
+    if (this.selectedRole === 'user') {
+      this.loginService.loginWithFormData(formData).subscribe({
+        next: () => this.toastService.success("Login realizado com sucesso!"),
+        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
+      });
+    } else if (this.selectedRole === 'company') {
+      this.loginService.loginCompanyWithFormData(formData).subscribe({
+        next: () => this.toastService.success("Login realizado com sucesso!"),
+        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
+      });
+    } else {
+      this.toastService.error("Por favor, selecione um role.");
+    }
+
   }
 
   navigate() {

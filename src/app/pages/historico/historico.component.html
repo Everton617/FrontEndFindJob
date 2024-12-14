@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <h2>Vagas Disponíveis</h2>
+  <h2>Vagas já inscritas</h2>
   <div class="job-list">
     <div class="job-card" *ngFor="let job of jobs">
       <h3>{{ job.title }}</h3>
@@ -8,7 +8,6 @@
       <p><strong>Requisitos:</strong> {{ job.requirements }}</p>
       <p><strong>Data de Criação:</strong> {{ job.createdDate }}</p>
       <p><strong>Empresa:</strong> {{ job.company.name }}</p>
-      <button (click)="applyForJob(job.id)" class="apply-button">Enviar Currículo</button>
     </div>
   </div>
 </div>
