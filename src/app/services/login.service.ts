@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class LoginService {
-  apiUrl: string = "http://localhost:8080/auth";
+  apiUrl: string = "https://javaapi-0dzj.onrender.com/auth";
 
   constructor(private httpClient: HttpClient,private router: Router) { }
 
@@ -33,35 +33,10 @@ export class LoginService {
       tap((value) => {
         sessionStorage.setItem("auth-token", value.token);
         sessionStorage.setItem("username", value.name);
-        this.router.navigate(['/login']);
-      })
-    );
-  }
-
-  loginCompanyWithFormData(formData: FormData) {
-    return this.httpClient.post<LoginResponse>(this.apiUrl + "/company/login", formData).pipe(
-      tap((value) => {
-        sessionStorage.setItem("auth-token", value.token);
-        sessionStorage.setItem("username", value.name);
-        sessionStorage.setItem("role", value.role);
-        sessionStorage.setItem("userId", value.id.toString());
-        this.router.navigate(['/home']);
-        console.log(sessionStorage.getItem("userId"))
-        console.log(value.token)
-        console.log(value.role)
+        this.router.navigate(['/']);
       })
     );
   }
 
 
-  signupCompanyWithFormData(formData: FormData) {
-    return this.httpClient.post<LoginResponse>(this.apiUrl + "/company/register", formData).pipe(
-      tap((value) => {
-        sessionStorage.setItem("auth-token", value.token);
-        sessionStorage.setItem("username", value.name);
-        this.router.navigate(['/login']);
-        console.log(value.token)
-      })
-    );
-  }
 }

@@ -38,13 +38,13 @@ export class HistoricoComponent {
       this.userId = sessionStorage.getItem('userId') || 'não encontrado';
     }
 
-    private apiUrl = 'http://localhost:8080/api/jobs';
+    private apiUrl = 'https://javaapi-0dzj.onrender.com/api/jobs';
     private headers = new HttpHeaders({
       'Authorization': `Bearer ${sessionStorage.getItem('auth-token') || ''}`,
     });
 
     ngOnInit(): void {
-      this.fetchJobs(); // Busca as vagas ao inicializar o componente
+      this.fetchJobs();
     }
 
      fetchJobs(): void {

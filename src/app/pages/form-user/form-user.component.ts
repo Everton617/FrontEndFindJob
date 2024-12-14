@@ -5,6 +5,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { HttpClient, HttpClientModule,HttpHeaders  } from '@angular/common/http';
 import { ActivatedRoute,Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 interface Experiencia {
   descricao: string;
@@ -18,7 +19,7 @@ export interface Candidato {
   id?: number;
   nome: string;
   telefone: string;
-  dt_nascimento: Date | string; // Usar Date ou string (ISO 8601)
+  dt_nascimento: Date | string;
   endereco: string;
   cep: string;
   cidade: string;
@@ -47,15 +48,16 @@ export class FormUserComponent {
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private toastService: ToastrService
   ) {
-    // Carrega dados do sessionStorage
+
     this.userId = sessionStorage.getItem('userId') || 'não encontrado';
     this.userName = sessionStorage.getItem('username') || 'Usuário';
     this.token = sessionStorage.getItem('auth-token') || 'não encontrado';
     this.formDataResponse = JSON.parse(sessionStorage.getItem('formData') || 'null')
 
 
-    // Inicializa o formulário diretamente no construtor
+
     this.candidatoForm = this.fb.group({
       nome: ['', Validators.required],
       telefone: ['', Validators.required],
@@ -76,7 +78,6 @@ export class FormUserComponent {
   }
 
   onSubmit() {
-    console.log(this.candidatoForm.value)
     if (this.candidatoForm.valid) {
       const candidato: Candidato = this.candidatoForm.value;
 
@@ -89,27 +90,20 @@ export class FormUserComponent {
         };
       }
 
-      const apiUrl = `http://localhost:8080/api/candidatos/${this.userId}`;
+      const apiUrl = `https://javaapi-0dzj.onrender.com/api/candidatos/${this.userId}`;
 
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${this.token}`
       });
 
-      console.log('headers',headers)
-
-      console.log('Dados enviados para o backend:', candidato);
-      console.log('ID do Token:', this.token);
-      console.log('ID do Usuário:', this.userId);
-
-
       this.http.put<any>(apiUrl, this.candidatoForm.value, { headers }).subscribe({
-        next: (response) => {
-          console.log('Candidato atualizado com sucesso:', response);
-          alert('Candidato atualizado com sucesso!');
+        next: () => {
+          this.getFormData()
+          this.toastService.success("Candidato atualizado com sucesso!")
         },
         error: (error) => {
+          this.toastService.error("Erro ao atualizar candidato!");
           console.error('Erro ao atualizar candidato:', error);
-          alert('Erro ao atualizar o candidato. Verifique o console para mais detalhes.');
         },
       });
     } else {
@@ -125,7 +119,7 @@ export class FormUserComponent {
 
   getFormData(): void {
 
-    const apiUrl = `http://localhost:8080/api/candidatos/${this.userId}`;
+    const apiUrl = `https://javaapi-0dzj.onrender.com/api/candidatos/${this.userId}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
@@ -133,7 +127,7 @@ export class FormUserComponent {
 
     console.log(headers)
 
-    // Faz a requisição GET
+
     this.http.get<Candidato>(apiUrl, { headers }).subscribe({
       next: (response) => {
         if (response) {

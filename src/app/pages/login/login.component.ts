@@ -49,20 +49,15 @@ export class LoginComponent {
     const formData = new FormData();
     formData.append('email', this.loginForm.value.email || '');
     formData.append('password', this.loginForm.value.password || '');
+    formData.append('userType', this.selectedRole);
 
-    if (this.selectedRole === 'user') {
-      this.loginService.loginWithFormData(formData).subscribe({
-        next: () => this.toastService.success("Login realizado com sucesso!"),
-        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-      });
-    } else if (this.selectedRole === 'company') {
-      this.loginService.loginCompanyWithFormData(formData).subscribe({
-        next: () => this.toastService.success("Login realizado com sucesso!"),
-        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-      });
-    } else {
-      this.toastService.error("Por favor, selecione um role.");
-    }
+    this.loginService.loginWithFormData(formData).subscribe({
+      next: () => this.toastService.success("Login realizado com sucesso!"),
+      error: (error) => {
+        console.error("Login error:", error);
+        this.toastService.error("Erro ao fazer login. Verifique suas credenciais ou tipo de usuário.");
+      }
+    });
 
   }
 

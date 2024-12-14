@@ -25,7 +25,7 @@ interface Job {
 @Component({
   selector: 'app-form-vagas',
   standalone: true,
-  imports: [NavbarComponent, ReactiveFormsModule,CommonModule],
+  imports: [NavbarComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './form-vagas.component.html',
   styleUrl: './form-vagas.component.scss'
 })
@@ -34,15 +34,16 @@ export class FormVagasComponent {
   token: string;
   userName: string;
   jobForm: FormGroup;
+  userRole: string;
 
   formDataResponse: Job[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private toastService: ToastrService
+  constructor(private fb: FormBuilder, private http: HttpClient, private toastService: ToastrService
   ) {
     this.userId = sessionStorage.getItem('userId') || 'não encontrado';
     this.userName = sessionStorage.getItem('username') || 'Usuário';
     this.token = sessionStorage.getItem('auth-token') || 'não encontrado';
-
+    this.userRole = sessionStorage.getItem('role') || 'não encontrado'
     this.jobForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -53,7 +54,7 @@ export class FormVagasComponent {
 
 
   onSubmit(): void {
-    const apiUrl = `http://localhost:8080/api/companies/${this.userId}/jobs`;
+    const apiUrl = `https://javaapi-0dzj.onrender.com/api/companies/${this.userId}/jobs`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
     });
@@ -62,7 +63,8 @@ export class FormVagasComponent {
     const formData = {
       title: this.jobForm.value.title,
       description: this.jobForm.value.description,
-      requirements: this.jobForm.value.requirements
+      requirements: this.jobForm.value.requirements,
+      userRole: this.userRole
     };
 
     console.log(formData)
@@ -72,7 +74,7 @@ export class FormVagasComponent {
     this.http.post<any>(apiUrl, formData, { headers }).subscribe({
       next: (response) => {
         this.toastService.success("Vaga criada com sucesso!"),
-        this.getFormData();
+          this.getFormData();
       },
       error: (error) => {
         console.error('Erro ao criar vaga:', error);
@@ -87,23 +89,32 @@ export class FormVagasComponent {
 
 
   getFormData(): void {
-    const apiUrl = `http://localhost:8080/api/jobs/companies/${this.userId}`;
+    const apiUrl = `https://javaapi-0dzj.onrender.com/api/jobs/companies/${this.userId}?userType=${this.userRole}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
 
     this.http.get<Job[]>(apiUrl, { headers }).subscribe({
       next: (response) => {
-        if (response) {
-          // Filtra as vagas para incluir apenas as vagas da empresa associada ao usuário
+        if (response && response.length > 0) {
+
           this.formDataResponse = response.filter(job => job.company.id.toString() === this.userId);
           console.log('Vagas filtradas:', this.formDataResponse);
+
+          if (this.formDataResponse.length === 0) {
+            console.log('Nenhuma vaga encontrada para esta empresa.');
+
+          }
+
         } else {
-          console.log('Nenhuma vaga encontrada');
+          console.log('Nenhuma vaga encontrada.');
+
+
         }
       },
       error: (error) => {
         console.error('Erro ao buscar os dados da empresa:', error);
+
       }
     });
   }

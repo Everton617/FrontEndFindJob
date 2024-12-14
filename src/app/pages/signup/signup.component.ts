@@ -55,30 +55,31 @@ export class SignUpComponent {
       return;
     }
 
+    console.log(this.selectRole)
+
+
+
     const formData = new FormData();
     formData.append('name', this.signupForm.value.name || '');
     formData.append('email', this.signupForm.value.email || '');
     formData.append('password', this.signupForm.value.password || '');
     formData.append('passwordConfirm', this.signupForm.value.passwordConfirm || '');
+    formData.append('userType', this.selectedRole);
 
-    if (this.selectedRole === 'user') {
-      this.loginService.signupWithFormData(formData).subscribe({
-        next: () => this.toastService.success("Cadastro realizado com sucesso!"),
-        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-      });
-    } else if (this.selectedRole === 'company') {
-      this.loginService.signupCompanyWithFormData(formData).subscribe({
-        next: () => this.toastService.success("Cadastro realizado com sucesso!"),
-        error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-      });
-    } else {
-      this.toastService.error("Por favor, selecione um role.");
-    }
+    console.log(formData)
+
+    this.loginService.signupWithFormData(formData).subscribe({
+      next: () => this.toastService.success("Login realizado com sucesso!"),
+      error: (error) => {
+        console.error("Login error:", error);
+        this.toastService.error("Erro ao fazer login. Verifique suas credenciais ou tipo de usuário.");
+      }
+    });
   }
 
 
 
   navigate() {
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/"]);
   }
 }

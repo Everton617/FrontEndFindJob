@@ -7,7 +7,7 @@
       <p><strong>Descrição:</strong> {{ job.description }}</p>
       <p><strong>Requisitos:</strong> {{ job.requirements }}</p>
       <p><strong>Data de Criação:</strong> {{ job.createdDate }}</p>
-      <p><strong>Empresa:</strong> {{ job.company.name }}</p>
+      <p><strong>Empresa:</strong> {{ job.company.nome }}</p>
       <button (click)="applyForJob(job.id)" class="apply-button">Enviar Currículo</button>
     </div>
   </div>

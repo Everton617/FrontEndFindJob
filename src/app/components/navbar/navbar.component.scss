@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #333;
+  background-color: #0a2e92;
   color: white;
   padding: 1rem;
 }
@@ -17,12 +17,20 @@
   align-items: center;
 }
 
+.area-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .navbar-brand {
   font-size: 1.5rem;
   text-decoration: none;
   color: white;
 }
-
+.fa-solid{
+  font-size: 30px;
+}
 .nav-links {
   list-style: none;
   display: flex;
